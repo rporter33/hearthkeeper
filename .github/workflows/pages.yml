@@ -21,17 +21,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
       # The build only ships if the rules still hold.
       - run: npm test
       - run: npm run build
-      # enablement turns Pages on from the workflow itself where the token allows it,
-      # so a fresh repo does not need the settings toggle flipped by hand first.
+      # Pages must already be enabled with Source: GitHub Actions — the workflow token is not
+      # allowed to create the Pages site, so enabling it here fails the run instead.
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
